@@ -109,11 +109,11 @@ td small{font-family:var(--mono);font-size:11px;color:var(--dim)}.dn span{font-f
 /* labels sit right above their inputs; grid is never squeezed, so no field spills into the next block */
 .fg label{justify-content:flex-end}.srch input{padding:8px 12px 8px 34px}
 #dr.m .dg{flex:none}#dr.m .dg>*{min-height:auto}
-#dr.m .fg{grid-auto-rows:minmax(75px,auto);gap:10px 14px}#dr.m .fg label{gap:4px;line-height:1.3}#dr.m .ip input{padding:8px 28px 8px 12px}#dr.wide.m .phb .ph{width:68px;height:68px}#dr.wide:not(.m) .dg{flex:none;min-height:0;grid-template-rows:auto auto;align-content:start}#dr.wide:not(.m) .dg>*{min-height:auto}#dr.wide:not(.m) textarea{min-height:150px;overflow:auto}#dr.wide>*{flex-shrink:0}
+#dr.m .fg{grid-auto-rows:minmax(75px,auto);gap:10px 14px}#dr.m .fg label{gap:4px;line-height:1.3}#dr.m .ip input{padding:8px 28px 8px 12px}#dr.wide.m .phb .ph{width:68px;height:68px}#dr.wide:not(.m) .dg{flex:none;min-height:0;grid-template-rows:auto auto;align-content:start}#dr.wide:not(.m) .dg>*{min-height:auto}#dr.wide:not(.m) textarea{min-height:150px;overflow:auto}#dr.wide>*{flex-shrink:0}#gh{position:fixed;inset:0;background:rgba(0,0,0,.6);display:grid;place-items:center;z-index:30}
 </style></head>
 <body><div class="w">
 <header class="top"><span class="brand"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20z" fill="currentColor"/><path d="M12 2a10 10 0 0 1 0 20z" fill="currentColor" opacity=".4"/></svg>Юнит-экономика</span><span id="st">Загружаю…</span><span class="sp"></span>
-<span id="cfg" hidden><label>Курс юаня, ₽ <input id="rate" type="text" inputmode="decimal" data-n></label><label>Комиссия байера, % <input id="comm" type="text" inputmode="decimal" data-n></label></span><button data-exp>Экспорт</button><button data-imp>Импорт</button><button class="ico" data-theme-btn title="Светлая / тёмная тема" aria-label="Переключить тему"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg></button><input type="file" id="imf" accept=".json,application/json" hidden></header>
+<span id="cfg" hidden><label>Курс юаня, ₽ <input id="rate" type="text" inputmode="decimal" data-n></label><label>Комиссия байера, % <input id="comm" type="text" inputmode="decimal" data-n></label></span><button data-gh>Синхронизация</button><button data-exp>Экспорт</button><button data-imp>Импорт</button><button class="ico" data-theme-btn title="Светлая / тёмная тема" aria-label="Переключить тему"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg></button><input type="file" id="imf" accept=".json,application/json" hidden></header>
 <h1 id="ttl"></h1>
 <div class="tabs"><button data-tab="main" class="on"></button><button data-tab="china"></button></div>
 <div class="pgs" id="pg" hidden></div><div class="pgd" id="pgd" hidden></div>
@@ -132,7 +132,7 @@ td small{font-family:var(--mono);font-size:11px;color:var(--dim)}.dn span{font-f
 <div class="prow"><span>Масштаб</span><input type="range" id="pzr" min="1" max="3" step="0.05"></div>
 <div class="prow"><span>Показ</span><div class="seg"><button data-pf="cover">Заполнить</button><button data-pf="contain">Вписать</button></div></div>
 <p class="sm" style="margin:0">Перетащи фото, чтобы сдвинуть его в рамке.</p>
-<div class="ac"><button class="pri" data-pdone>Готово</button><button data-preset>Сбросить</button><button data-pcancel>Отмена</button></div></div></div><div id="tt"></div>
+<div class="ac"><button class="pri" data-pdone>Готово</button><button data-preset>Сбросить</button><button data-pcancel>Отмена</button></div></div></div><div id="gh" hidden><div class="pbox" role="dialog" aria-label="Синхронизация через GitHub"><div class="lt">Синхронизация через GitHub</div><label class="sm" style="margin:0">Приватный репозиторий (логин/имя)<input id="ghr" placeholder="rudik/unit-data" autocomplete="off"></label><label class="sm" style="margin:0">Токен доступа<input id="ght" type="password" autocomplete="off"></label><div class="ac"><button class="pri" data-ghsave>Подключить</button><button data-ghoff>Отключить</button><button data-ghx>Закрыть</button></div></div></div><div id="tt"></div>
 <script>
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const N=x=>+x||0,fm=(x,d=0)=>x==null||!isFinite(x)?'—':x.toLocaleString('ru-RU',{maximumFractionDigits:d}),pc=x=>x==null||!isFinite(x)?'—':fm(x*100,1)+'%',cls=x=>x==null||!isFinite(x)?'':x>0?'ok':'bad';
@@ -159,7 +159,7 @@ function toast(t){const e=$('#tt');e.textContent=t;e.style.display='block';clear
 function touch(k){chg.add(k);setSt('Сохраняю…');clearTimeout(saveT);saveT=setTimeout(flush,600)}
 async function flush(){if(busy){saveT=setTimeout(flush,300);return}
  try{localStorage.setItem(LK,JSON.stringify(S))}catch(e){}
- if(!DB){setSt('Только в этом браузере — сделай экспорт, чтобы не потерять',1);chg.clear();return}
+ if(!DB){chg.clear();if(GH.on())ghPush();else setSt('Только в этом браузере — сделай экспорт, чтобы не потерять',1);return}
  busy=true;const ks=[...chg].filter(k=>RDY[k]);chg.clear();if(!ks.length){busy=false;setSt('Данные из облака ещё не загрузились — правки пока не сохраняются в облако',1);return}
  try{for(const k of ks)await DB.doc(`data/users/${UID}/${k}`).set(k=='china'?{v:2,pages:S.china,rate:S.cfg.rate,comm:S.cfg.comm}:{v:1,items:S[k]});setSt('Сохранено в облаке')}catch(e){ks.forEach(k=>chg.add(k));setSt('Не получилось сохранить в облако — копия есть в этом браузере',1)}
  busy=false}
@@ -276,11 +276,23 @@ document.addEventListener('focusout',e=>{if(e.target.id=='pgn')commitRen()});
 document.addEventListener('dblclick',e=>{const b=e.target.closest('[data-pg]');if(b){S.page=b.dataset.pg;ren=b.dataset.pg;render()}});
 document.addEventListener('mouseup',e=>{const t=e.target;if(t.tagName!='INPUT'||t.type!='text'||t.selectionStart!==t.selectionEnd)return;if(t.scrollWidth>t.clientWidth+1&&e.clientX>t.getBoundingClientRect().left+t.clientWidth*0.6){const n=t.value.length;t.setSelectionRange(n,n)}});
 $('#q').addEventListener('input',e=>{qs=e.target.value.trim().toLowerCase();render()});
+const GH={k:'uo-gh',c:null,sha:null,get(){try{this.c=JSON.parse(localStorage.getItem(this.k)||'null')}catch(e){this.c=null}return this.c},on(){return !!((this.c||this.get())&&this.c.repo&&this.c.token)}};
+const ghU=()=>`https://api.github.com/repos/${GH.c.repo}/contents/data.json`,ghH=()=>({Authorization:'Bearer '+GH.c.token,Accept:'application/vnd.github+json'}),b64e=t=>btoa(unescape(encodeURIComponent(t))),b64d=t=>decodeURIComponent(escape(atob(t.replace(/\n/g,''))));
+let ghB=0,ghQ=0;
+async function ghPull(q){try{const r=await fetch(ghU(),{headers:ghH(),cache:'no-store'});if(r.status==404){GH.sha=null;await ghPush();return}if(!r.ok)throw r.status;const j=await r.json();GH.sha=j.sha;const d=JSON.parse(b64d(j.content));if(Array.isArray(d.main))S.main=d.main;if(d.china)S.china=normCh(d.china);if(d.cfg)S.cfg=d.cfg;try{localStorage.setItem(LK,JSON.stringify(S))}catch(e){}setSt('Синхронизировано с GitHub');if(!q)render()}catch(e){setSt('GitHub недоступен ('+e+') — данные из этого браузера',1)}}
+async function ghPush(){if(ghB){ghQ=1;return}ghB=1;try{const b={message:'sync '+new Date().toISOString(),content:b64e(JSON.stringify({v:1,main:S.main,china:S.china,cfg:S.cfg}))};if(GH.sha)b.sha=GH.sha;const r=await fetch(ghU(),{method:'PUT',headers:ghH(),body:JSON.stringify(b)});if(r.status==409||r.status==422){ghB=0;toast('На другом устройстве данные новее — загружаю');await ghPull();return}if(!r.ok)throw r.status;GH.sha=(await r.json()).content.sha;setSt('Сохранено в GitHub')}catch(e){setSt('Не удалось сохранить в GitHub ('+e+') — копия есть в браузере',1)}ghB=0;if(ghQ){ghQ=0;ghPush()}}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!DB&&GH.on()&&!chg.size&&!sel)ghPull()});
+document.addEventListener('click',async e=>{const t=e.target.closest('[data-gh],[data-ghsave],[data-ghoff],[data-ghx]');if(!t)return;
+ if(t.matches('[data-gh]')){const c=GH.get()||{};$('#ghr').value=c.repo||'';$('#ght').value=c.token||'';$('#gh').hidden=false}
+ else if(t.matches('[data-ghx]'))$('#gh').hidden=true
+ else if(t.matches('[data-ghoff]')){try{localStorage.removeItem(GH.k)}catch(x){}GH.c=null;GH.sha=null;$('#gh').hidden=true;setSt('Только в этом браузере — сделай экспорт, чтобы не потерять',1)}
+ else{const repo=$('#ghr').value.trim(),token=$('#ght').value.trim();if(!/^[\w.-]+\/[\w.-]+$/.test(repo)||!token){toast('Укажи репозиторий и токен');return}try{localStorage.setItem(GH.k,JSON.stringify({repo,token}))}catch(x){}GH.c={repo,token};GH.sha=null;$('#gh').hidden=true;await ghPull()}});
 const saveLocal=()=>{try{localStorage.setItem(LK,JSON.stringify(S))}catch(e){}};addEventListener('pagehide',saveLocal);document.addEventListener('visibilitychange',()=>{if(document.hidden)saveLocal()});
 (async function boot(){try{const l=JSON.parse(localStorage.getItem(LK)||'null');if(l)S={main:l.main||[],china:normCh(l.china),cfg:l.cfg||{rate:13,comm:3},page:l.page||'p1'}}catch(e){}
  render();
  try{if(window.claude){const u=await claude.use('user'),d=await claude.use('db'),id=u&&await u.id();
   if(d&&id){DB=d;UID=id;const t=setTimeout(()=>setSt('Облако не отвечает — показаны данные из этого браузера',1),10000);
    for(const k of['main','china']){for(let i=0;i<3;i++){const s=await DB.doc(`data/users/${id}/${k}`).get();if(s.exists&&(Array.isArray(s.data().items)||Array.isArray(s.data().pages))){const d=JSON.parse(JSON.stringify(s.data()));if(k=='china'){S.china=normCh(d.pages||d.items);S.cfg={rate:d.rate??13,comm:d.comm??3}}else S[k]=d.items;chg.delete(k);RDY[k]=1;break}if(!s.metadata.fromCache){RDY[k]=1;break}await new Promise(r=>setTimeout(r,1200))}}clearTimeout(t)}}}catch(e){}
+ if(!DB&&GH.on()){await ghPull(1);render();return}
  const ok=DB&&RDY.main&&RDY.china;setSt(ok?'Сохранено в облаке':DB?'Не удалось загрузить данные из облака — правки пока не сохраняются в облако':'Только в этом браузере — сделай экспорт, чтобы не потерять',!ok);render()})();
 </script></body></html>
