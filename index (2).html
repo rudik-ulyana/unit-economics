@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Юнит-экономика Ozon</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('uo-theme')||'dark'}catch(e){document.documentElement.dataset.theme='dark'}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f8f8f7;--card:#fff;--in:#f5f5f4;--line:#eaeae8;--line2:#dadad7;--ink:#161616;--mute:#6c6c6a;--dim:#9a9a97;--acc:#0058ff;--ok:#12805c;--bad:#d92d4a;--warn:#a66a00;--hov:#f2f2f0;--rs:linear-gradient(180deg,#fff,#f4f4f2);--rb:#d9d9d5;--c1:#8a8a94;--c2:#c08a1e;--c3:#8b6bd3;--c4:#2f7bff;--c5:#b9b9c2;--c6:#d0645a;--c7:#1f9d6e;--g1:#d9a21b;--g2:#1f9d6e;--g3:#2f7bff;--g4:#d6478f;--g5:#8b6bd3;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0c0c0c;--card:#141414;--in:#101010;--line:#222;--line2:#303030;--ink:#f0f0f0;--mute:#a0a0a0;--dim:#6b6b6b;--acc:#5b9bff;--ok:#4cd38c;--bad:#ff6b7d;--warn:#e0b04b;--hov:#1a1a1a;--rs:linear-gradient(180deg,#2b2b2b,#1f1f1f);--rb:#363636;--c1:#6c6c74;--c2:#b8892b;--c5:#4a4a52;--c7:#3dbb85;--g1:#f5c542;--g2:#34d399;--g3:#60a5fa;--g4:#f472b6;--g5:#a78bfa}}
+:root[data-theme="dark"]{--bg:#0c0c0c;--card:#141414;--in:#101010;--line:#222;--line2:#303030;--ink:#f0f0f0;--mute:#a0a0a0;--dim:#6b6b6b;--acc:#5b9bff;--ok:#4cd38c;--bad:#ff6b7d;--warn:#e0b04b;--hov:#1a1a1a;--rs:linear-gradient(180deg,#2b2b2b,#1f1f1f);--rb:#363636;--c1:#6c6c74;--c2:#b8892b;--c5:#4a4a52;--c7:#3dbb85;--g1:#f5c542;--g2:#34d399;--g3:#60a5fa;--g4:#f472b6;--g5:#a78bfa}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;font-feature-settings:"tnum" 1,"cv11" 1;-webkit-font-smoothing:antialiased}
+.w{max-width:2000px;margin:0 auto;padding:20px 28px 32px}
+header{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding-bottom:16px}
+h1{margin:0;font-size:22px;font-weight:600;letter-spacing:-.02em}h1 span{color:var(--dim);font-weight:500}
+#st{font-size:12px;color:var(--mute);display:flex;align-items:center;gap:6px}#st:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ok)}#st.warn:before{background:var(--warn)}.sp{flex:1}
+button{font:inherit;font-size:13px;color:var(--ink);background:transparent;border:1px solid var(--line2);border-radius:8px;padding:6px 12px;cursor:pointer;transition:background .12s,border-color .12s}
+button:hover{background:var(--hov)}button.pri{background:var(--acc);border-color:var(--acc);color:#fff}button.pri:hover{filter:brightness(1.08)}button.danger{color:var(--bad)}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}.ico,.x{width:32px;height:32px;padding:0;display:inline-grid;place-items:center;color:var(--mute)}
+#cfg{display:flex;gap:14px;align-items:center}#cfg label{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--mute)}#cfg input{width:76px;text-align:right}
+.tabs{display:flex;gap:22px;border-bottom:1px solid var(--line);margin-bottom:20px}
+.tabs button{border:0;border-radius:0;background:none;padding:10px 0;color:var(--mute);border-bottom:2px solid transparent;margin-bottom:-1px}.tabs button:hover{background:none;color:var(--ink)}.tabs button.on{color:var(--ink);border-color:var(--ink);font-weight:500}
+#kp{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:20px}#kp div{display:flex;flex-direction:column;min-width:200px;padding:14px 18px;background:var(--card);border:1px solid var(--line);border-radius:12px}
+#kp span{order:-1;font-size:12px;color:var(--mute);margin-bottom:4px}#kp b{font-size:24px;font-weight:600;letter-spacing:-.02em}#kp.kc{justify-content:center}#kp.kc div{align-items:center;text-align:center;min-width:240px}
+input,textarea{font:inherit;color:var(--ink);background:var(--in);border:1px solid var(--line);border-radius:8px;padding:7px 10px;width:100%;transition:border-color .12s}
+input:hover,textarea:hover{border-color:var(--line2)}input:focus,textarea:focus{outline:0;border-color:var(--acc);box-shadow:0 0 0 3px color-mix(in srgb,var(--acc) 22%,transparent)}input::placeholder,textarea::placeholder{color:var(--dim)}
+.tb{display:flex;gap:8px;margin-bottom:12px;align-items:center}.tb input{max-width:300px}
+.tw{overflow:auto;border:1px solid var(--line);border-radius:12px;background:var(--card);max-height:calc(100vh - 250px);min-height:320px}
+table{border-collapse:separate;border-spacing:0;width:100%}
+th{position:sticky;top:0;z-index:2;background:var(--card);color:var(--mute);font-size:12px;font-weight:500;text-align:center;vertical-align:middle;line-height:1.3;text-wrap:balance;padding:10px 8px;border-bottom:1px solid var(--line)}
+th[data-sort]{cursor:pointer}th[data-sort]:hover,th.cur{color:var(--ink)}
+td{padding:10px 8px;border-bottom:1px solid var(--line);text-align:center;vertical-align:middle}tbody tr:last-child td{border-bottom:0}tbody tr:hover td{background:var(--hov)}
+th:first-child,td:first-child{text-align:left;position:sticky;left:0;background:var(--card);z-index:1;min-width:210px;padding-left:14px}th:first-child{z-index:3;text-align:center}
+@media(max-width:700px){th:first-child,td:first-child{position:static}}
+#tw1 th{min-width:96px}#tw1 th:last-child{min-width:70px}#tw1 th:first-child{min-width:210px}#tw1 .cell{width:76px}
+.nm{display:flex;gap:12px;align-items:center;cursor:pointer}.nm b{display:block;font-weight:500}.nm:hover b{color:var(--acc)}.nm small,td small{display:block;color:var(--mute);font-size:12px;max-width:190px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ph{width:40px;height:40px;border-radius:8px;object-fit:cover;flex:none;background:var(--in);border:1px solid var(--line);display:grid;place-items:center;color:var(--dim);font-weight:500}
+.cell{width:76px;text-align:center;background:transparent}.cell:hover{background:var(--in)}.cmt{text-align:left;width:130px}
+.ok{color:var(--ok)}.bad{color:var(--bad)}.n{font-weight:500}.hl{font-size:15px;font-weight:600}.roi{color:var(--ink)}.empty{padding:40px;text-align:center;color:var(--mute)}
+.lk{text-align:center}.lk a,.t2 a{color:var(--mute);text-decoration:none;white-space:nowrap;display:inline-flex;align-items:center;gap:5px}.lk a:hover,.t2 a:hover{color:var(--acc)}
+.act{display:flex;gap:2px;justify-content:center}.act button,.del{border-color:transparent;background:transparent;color:var(--mute);width:32px;height:30px;padding:0;display:inline-grid;place-items:center}
+.act button:hover,.del:hover{background:var(--hov);color:var(--ink)}.del:hover{color:var(--bad)}.del.armed,.del.armed:hover{width:auto;padding:0 10px;background:var(--bad);border-color:var(--bad);color:#fff;font-size:12px;font-weight:500}
+.t2 table{min-width:0;width:100%}.t2 thead{position:sticky;top:0;z-index:6}.t2 th{position:static;min-width:0;padding:8px 3px;font-size:10.5px}.t2 th:first-child,.t2 td:first-child{position:static;min-width:0;text-align:center;padding-left:8px}
+.t2 .bh th{height:auto;padding:8px 6px;white-space:normal;color:var(--ink);font-weight:600;letter-spacing:.01em}
+.t2 .bh th:before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:8px;background:var(--g1)}.t2 .bh th:nth-child(2):before{background:var(--g2)}.t2 .bh th:nth-child(3):before{background:var(--g3)}.t2 .bh th:nth-child(4):before{background:var(--g4)}
+.t2 .bh th:nth-child(n+2),.t2 thead tr:nth-child(2) th:nth-child(5),.t2 thead tr:nth-child(2) th:nth-child(7),.t2 thead tr:nth-child(2) th:nth-child(12),.t2 tbody td:nth-child(5),.t2 tbody td:nth-child(7),.t2 tbody td:nth-child(12){border-left:1px solid var(--line2)}
+.t2 td.sz{text-align:left;white-space:pre-line;font-size:11.5px;line-height:1.4;color:var(--mute);min-width:120px}.t2 .ph{width:44px;height:44px}.t2 .cell{width:100%;min-width:50px;padding:6px 4px;font-size:13px}.t2 td{font-size:13px}.t2 td,.t2 th{padding-left:4px;padding-right:4px}.t2 .cmt{width:100%;min-width:90px}.t2 .lkt{display:none}.t2 .act button{width:28px}
+#ov{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;justify-content:flex-end;z-index:9}#ov.on{display:flex}
+#dr{width:min(560px,100%);background:var(--bg);border-left:1px solid var(--line);overflow:auto;padding:20px;padding-top:calc(20px + env(safe-area-inset-top,0px));padding-bottom:calc(28px + env(safe-area-inset-bottom,0px))}
+.dh{display:flex;gap:14px;align-items:flex-start;margin-bottom:14px}.dh .gr{flex:1;display:grid;gap:8px}.dh textarea{resize:vertical;font-weight:500}
+.phb{cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;color:var(--mute)}.phb .ph{width:64px;height:64px}.phb u{text-decoration:none}.phb:hover u{color:var(--acc)}
+#res{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin:0 0 12px}
+.big{display:flex;align-items:baseline;gap:10px}.big span{font-size:32px;font-weight:600;letter-spacing:-.03em}.big small{color:var(--mute)}
+.kv{display:flex;gap:24px;margin:10px 0 14px}.kv div{display:flex;flex-direction:column;color:var(--mute);font-size:12px}.kv b{font-size:16px;color:var(--ink);font-weight:600}.kv b.ok{color:var(--ok)}.kv b.bad{color:var(--bad)}
+.bar{display:flex;height:8px;border-radius:4px;overflow:hidden;background:var(--line)}.bar i{display:block;height:100%}
+.lg{list-style:none;margin:12px 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:4px 20px}.lg li{display:flex;align-items:center;gap:8px;font-size:13px}.lg i{width:8px;height:8px;border-radius:50%;flex:none}.lg b{margin-left:auto;font-weight:500}
+.sm{font-size:13px;color:var(--mute);margin:12px 0 0}.sm b{color:var(--ink);font-weight:500}.sm b.ok{color:var(--ok)}.sm b.bad{color:var(--bad)}
+fieldset{border:1px solid var(--line);border-radius:12px;margin:0 0 12px;padding:10px 16px 16px;background:var(--card);min-width:0}legend{padding:0 6px;color:var(--mute);font-size:12px;font-weight:500}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:12px}.fg.g3{grid-template-columns:repeat(3,1fr)}.fg label{font-size:12px;color:var(--mute);display:flex;flex-direction:column;gap:5px}
+.ip{position:relative;display:block}.ip input{padding-right:30px}.ip em{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-style:normal;color:var(--dim);font-size:12px;pointer-events:none}
+.ac{display:flex;gap:8px;margin-top:8px}.qa{border-color:var(--line2)}
+.kvt{font-size:13px}.kvt td{padding:9px 6px;border-bottom:1px solid var(--line)}.kvt tr:last-child td{border-bottom:0}.kvt td:first-child{position:static;min-width:0;text-align:left;background:none;padding-left:6px}.kvt td:not(:first-child){text-align:right;white-space:nowrap}
+.dn{display:flex;align-items:baseline;gap:8px;margin-top:10px}.dn b{font-size:34px;font-weight:600;letter-spacing:-.02em}.dn span{color:var(--mute)}
+#dr.wide{width:min(1400px,100%);display:flex;flex-direction:column;padding:24px 28px}#dr.wide .dh{align-items:center;gap:16px;margin-bottom:16px}#dr.wide .phb .ph{width:76px;height:76px}
+#dr.wide .dg{flex:1;min-height:560px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:auto minmax(0,1fr);gap:14px;margin:0 0 16px}#dr.wide .dg>*{margin:0;min-width:0;min-height:0}
+#dr.wide fieldset{display:flex;flex-direction:column;gap:14px;padding:12px 18px 18px}#dr.wide .qa .fg{flex:1;align-content:space-evenly}#dr.wide .ip input{padding:10px 30px 10px 12px;font-size:15px}
+#dr.wide #res{display:flex;flex-direction:column;justify-content:space-between;padding:16px 18px}#dr.wide textarea{flex:1;min-height:110px;resize:none;line-height:1.6;padding:10px 12px}#dr.wide .cm{grid-column:span 2}#dr.wide #dres{margin-top:auto}
+@media(max-width:1100px){#dr.wide .dg{grid-template-columns:1fr 1fr;grid-template-rows:none}#dr.wide .cm{grid-column:auto}}@media(max-width:760px){#dr.wide .dg{grid-template-columns:1fr}}@media(max-width:560px){.fg,.lg{grid-template-columns:1fr}}
+#tt{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:8px;display:none;z-index:20;font-size:13px}
+input[type=number]{-moz-appearance:textfield;appearance:textfield}input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+fieldset{padding:14px 16px 16px}.lt{color:var(--mute);font-size:12px;font-weight:500;margin-bottom:12px}tbody tr[data-id]{cursor:pointer}
+.pgs{display:flex;flex-wrap:wrap;gap:8px;margin:-8px 0 12px;align-items:center}.pgs button{border-radius:999px;padding:5px 14px}.pgs button.on{background:var(--ink);border-color:var(--ink);color:var(--bg)}.pgs button[data-pgadd]{width:30px;height:30px;padding:0;color:var(--mute)}
+.pgd{margin:0 0 16px}.pgd button{font-size:12px;padding:4px 10px}
+.kv2{display:flex;gap:28px}.kv2 div{display:flex;flex-direction:column}.kv2 span{font-size:12px;color:var(--mute)}.kv2 b{font-size:18px;font-weight:600}.dh .two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#dr.m #res{grid-row:span 2}#dr.wide #gres{margin-top:auto}#dr.m fieldset .fg{flex:1;align-content:space-evenly}
+@media(max-width:1100px){#dr.m #res{grid-row:auto}}
+.pgs input{width:150px;padding:4px 14px;border-radius:999px;font-size:13px}.pgd{display:flex;gap:8px}
+:root{--mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+header.top{padding-bottom:14px;margin-bottom:26px;border-bottom:1px solid var(--line)}.brand{display:inline-flex;align-items:center;gap:10px;font-size:15px;font-weight:600;letter-spacing:-.01em}
+#st{font-family:var(--mono);font-size:11.5px;color:var(--dim)}
+h1{font-size:32px;font-weight:400;letter-spacing:-.03em;line-height:1.1;margin:0 0 20px}h1 span{color:var(--dim)}
+.tabs{border:0;gap:6px;margin-bottom:14px}.tabs button{display:inline-flex;align-items:center;gap:8px;border:1px solid transparent;border-radius:10px;padding:7px 12px;margin:0;color:var(--mute)}.tabs button:hover{background:var(--hov);color:var(--ink)}
+.tabs button.on,.pgs button.on{background:var(--rs);border-color:var(--rb);color:var(--ink);box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}.ct{font:400 11.5px var(--mono);color:var(--dim)}
+.pgs{margin:0 0 6px}.pgs button{display:inline-flex;align-items:center;gap:8px;border:1px solid transparent;border-radius:10px;padding:6px 12px;color:var(--mute)}.pgs button:hover{background:var(--hov);color:var(--ink)}.pgs button.on:hover{background:var(--rs)}
+.pgs button[data-pg]:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--g1)}.pgs button:nth-child(5n+2):before{background:var(--g2)}.pgs button:nth-child(5n+3):before{background:var(--g3)}.pgs button:nth-child(5n+4):before{background:var(--g4)}.pgs button:nth-child(5n+5):before{background:var(--g5)}
+#kp{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-bottom:18px}#kp.kc{display:flex;justify-content:center}
+#kp div{border-radius:16px;padding:18px 20px;min-width:0;box-shadow:none;align-items:flex-start;text-align:left}#kp.kc div{align-items:center;text-align:center;min-width:240px}
+#kp span{order:0;margin:0 0 8px;font-size:13px;color:var(--mute)}#kp b{font-size:28px;font-weight:500;letter-spacing:-.025em;line-height:1.15}#kp i{font:400 11.5px var(--mono);font-style:normal;color:var(--dim);margin-top:8px}
+.srch{position:relative;display:block;width:300px}.srch input{padding:8px 74px 8px 34px;max-width:none}.srch>svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--dim);pointer-events:none}
+.kbs{position:absolute;right:8px;top:50%;transform:translateY(-50%);display:flex;gap:4px;pointer-events:none}.kbd{font:400 11px var(--mono);color:var(--mute);background:var(--card);border:1px solid var(--line2);border-radius:5px;padding:1px 6px;line-height:1.5}
+.tw,fieldset,#res{border-radius:16px}input,textarea,button{border-radius:10px}.ph{border-radius:10px}
+th{font-family:var(--mono);font-size:11px;font-weight:400;color:var(--dim);letter-spacing:0}th[data-sort]:hover,th.cur{color:var(--ink)}
+.t2 .bh th{font-family:var(--mono);font-size:11.5px;font-weight:400;color:var(--mute)}.lt{font-family:var(--mono);font-size:11.5px;font-weight:400;color:var(--dim)}
+td small{font-family:var(--mono);font-size:11px;color:var(--dim)}.dn span{font-family:var(--mono);font-size:12px}
+#dr.m fieldset .fg{flex:none;align-content:start}.fg.one{grid-template-columns:1fr}#dr.wide .lg{grid-template-columns:1fr}.lg b{white-space:nowrap}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:auto}.tile{display:flex;flex-direction:column;gap:4px;background:var(--in);border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-width:0}.tile span{font-size:12px;color:var(--mute)}.tile b{font-size:19px;font-weight:500;letter-spacing:-.02em;white-space:nowrap}
+.phw{display:flex;flex-direction:column;align-items:center;gap:6px}.lnk{border:0;background:none;padding:0;font-size:12px;color:var(--mute);text-decoration:underline;cursor:pointer}.lnk:hover{background:none;color:var(--acc)}
+.ph.pv{display:block;overflow:hidden;padding:0}.ph.pv img{width:100%;height:100%;display:block}
+#pe{position:fixed;inset:0;background:rgba(0,0,0,.6);display:grid;place-items:center;z-index:30}.pbox{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;width:min(380px,92vw);display:flex;flex-direction:column;gap:14px}
+.pfr{width:100%;aspect-ratio:1;border-radius:14px;overflow:hidden;background:var(--in);border:1px solid var(--line);cursor:grab;touch-action:none}.pfr:active{cursor:grabbing}.pfr img{width:100%;height:100%;display:block;user-select:none;-webkit-user-drag:none;pointer-events:none}
+.prow{display:flex;align-items:center;gap:12px}.prow>span{width:70px;font-size:12px;color:var(--mute)}.prow input[type=range]{flex:1;padding:0;height:4px;accent-color:var(--acc)}.seg{display:flex;gap:6px}.seg button.on{background:var(--rs);border-color:var(--rb)}
+/* Товары card: one row grid shared by both expense blocks, inputs on one line, compact height */
+.fg label{justify-content:space-between}
+#dr.m .fg{grid-auto-rows:minmax(88px,auto)}#dr.m .dg{grid-template-rows:auto auto;align-content:start;min-height:0}
+#dr.m #res{grid-row:auto}#dr.m .gl{grid-column:span 2}#dr.m .tx .fg,#dr.m .gl .fg{flex:1;align-content:center}
+#dr.wide .dh textarea{flex:none;min-height:0;height:64px}
+.ro{display:flex;align-items:center;min-height:46px;padding:0 12px;background:var(--in);border:1px solid var(--line);border-radius:10px}.ro b{font-size:16px;font-weight:500;white-space:nowrap}
+/* labels sit right above their inputs; grid is never squeezed, so no field spills into the next block */
+.fg label{justify-content:flex-end}.srch input{padding:8px 12px 8px 34px}
+#dr.m .dg{flex:none}#dr.m .dg>*{min-height:auto}
+#dr.m .fg{grid-auto-rows:minmax(75px,auto);gap:10px 14px}#dr.m .fg label{gap:4px;line-height:1.3}#dr.m .ip input{padding:8px 28px 8px 12px}#dr.wide.m .phb .ph{width:68px;height:68px}#dr.wide:not(.m) .dg{flex:none;min-height:0;grid-template-rows:auto auto;align-content:start}#dr.wide:not(.m) .dg>*{min-height:auto}#dr.wide:not(.m) textarea{min-height:150px;overflow:auto}#dr.wide>*{flex-shrink:0}
+</style></head>
+<body><div class="w">
+<header class="top"><span class="brand"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20z" fill="currentColor"/><path d="M12 2a10 10 0 0 1 0 20z" fill="currentColor" opacity=".4"/></svg>Юнит-экономика</span><span id="st">Загружаю…</span><span class="sp"></span>
+<span id="cfg" hidden><label>Курс юаня, ₽ <input id="rate" type="text" inputmode="decimal" data-n></label><label>Комиссия байера, % <input id="comm" type="text" inputmode="decimal" data-n></label></span><button data-exp>Экспорт</button><button data-imp>Импорт</button><button class="ico" data-theme-btn title="Светлая / тёмная тема" aria-label="Переключить тему"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg></button><input type="file" id="imf" accept=".json,application/json" hidden></header>
+<h1 id="ttl"></h1>
+<div class="tabs"><button data-tab="main" class="on"></button><button data-tab="china"></button></div>
+<div class="pgs" id="pg" hidden></div><div class="pgd" id="pgd" hidden></div>
+<div id="kp"></div>
+<div class="tb"><label class="srch"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="q" type="text" placeholder="Поиск" autocomplete="off"></label><span class="sp"></span><button class="pri" data-add>+ Добавить</button></div>
+<div class="tw" id="tw1"><table><thead><tr>
+<th>Товар</th><th style="text-align:center">Ссылка</th><th>Закупка, ₽</th><th>Кол-во</th><th>Фулфилмент, ₽</th><th>Закуп: итого</th><th>Партия</th><th>Цена Ozon, ₽</th><th>Комиссия Ozon, %</th>
+<th data-sort="profit">Прибыль / ед.</th><th data-sort="mar">Маржа</th><th data-sort="roi">Рентабельность</th><th data-sort="bp">Прибыль с партии</th><th>Продавать в мес., шт</th><th></th>
+</tr></thead><tbody id="tb"></tbody></table></div>
+<div class="tw t2" id="tw2" hidden><table><thead>
+<tr class="bh"><th colspan="4">Информация о товаре</th><th colspan="2">Цена товара на закуп</th><th colspan="5">Доставка</th><th colspan="6">Итоговые расходы</th></tr>
+<tr><th>Фотография</th><th>Ссылка</th><th>Размер</th><th>Количество</th><th>Цена в юанях<br>(за 1 шт)</th><th>Цена в рублях<br>(за 1 шт)</th><th>Вес 1 товара (кг)</th><th>Общий вес товара</th><th>Итоговая стоимость доставки</th><th>Итоговая стоимость доставки</th><th>Доставка по Китаю (Юань)</th><th>Стоимость 1 товара Факт+<wbr>доставка+<wbr>комиссия</th><th>Стоимость 1 товара Факт+<wbr>доставка+<wbr>комиссия</th><th>Конечная цена с учётом процента</th><th>Конечная цена с учётом процента</th><th>Комментарий</th><th></th></tr>
+</thead><tbody id="tb2"></tbody></table></div>
+</div>
+<div id="ov"><div id="dr" role="dialog" aria-label="Карточка товара"></div></div><div id="pe" hidden><div class="pbox" role="dialog" aria-label="Настройка фото"><div class="pfr" id="pfr"><img id="pim" alt=""></div>
+<div class="prow"><span>Масштаб</span><input type="range" id="pzr" min="1" max="3" step="0.05"></div>
+<div class="prow"><span>Показ</span><div class="seg"><button data-pf="cover">Заполнить</button><button data-pf="contain">Вписать</button></div></div>
+<p class="sm" style="margin:0">Перетащи фото, чтобы сдвинуть его в рамке.</p>
+<div class="ac"><button class="pri" data-pdone>Готово</button><button data-preset>Сбросить</button><button data-pcancel>Отмена</button></div></div></div><div id="tt"></div>
+<script>
+const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const N=x=>+x||0,fm=(x,d=0)=>x==null||!isFinite(x)?'—':x.toLocaleString('ru-RU',{maximumFractionDigits:d}),pc=x=>x==null||!isFinite(x)?'—':fm(x*100,1)+'%',cls=x=>x==null||!isFinite(x)?'':x>0?'ok':'bad';
+const F=[['buy','Цена закупки / производства','₽',0],['qty','Кол-во в партии','шт',0],['bpct','Комиссия байера','%',0],['blog','Логистика на партию','₽',0],['ff','Фулфилмент (маркировка / упаковка) за ед.','₽',0],['gift','Подарки / визитки (на партию)','₽',0],['ship','Отгрузка партии ТК на Ozon','₽',0],
+['price','Цена для клиента на Ozon','₽',1],['com','Комиссия Ozon','%',1],['ad','Реклама (от цены)','%',1],['dlv','Стоимость логистики товара до клиента','₽',1],['ret','Стоимость возврата','₽',1],['buyout','% выкупа','%',1],['stor','Хранение Ozon на ед.','₽',1],['acq','Эквайринг','%',1],['spp','Цена с СПП (пусто — как цена)','₽',1],
+['taxsys','Система налогообложения','',2],['tax','Налоговая ставка','%',2],['goal','Цель, ₽ в месяц','₽',3]];
+const G=['Расходы до продаж','Расходы Ozon','Налоги','Цели продаж'],LK='unit-ozon-v1',TN={main:'Товары',china:'Подбор товара'};
+const mk=o=>({id:Date.now().toString(36)+Math.random().toString(36).slice(2,5),name:'Новый товар',link:'',photo:'',buy:0,qty:50,bpct:0,blog:0,ff:15,gift:0,ship:0,price:0,com:52,ad:10,dlv:95,ret:25,buyout:95,stor:15,acq:1,spp:'',taxsys:'УСН доходы',tax:6,goal:1000000,...o});
+function calc(p){const q=N(p.qty),pr=N(p.price),bo=N(p.buyout),batch=N(p.buy)*q+N(p.blog)+N(p.bpct)/100*N(p.buy)*q,after=batch+N(p.ff)*q+N(p.ship)+N(p.gift),cost=q?after/q:0,
+com=pr*N(p.com)/100,ad=pr*N(p.ad)/100,lg=bo?100/bo*N(p.dlv)+(100/bo-1)*N(p.ret):0,acq=pr*N(p.acq)/100,st=N(p.stor),tax=(N(p.spp)||pr)*N(p.tax)/100,
+exp=com+ad+lg+st+acq,total=cost+exp+tax,profit=pr-total,units=profit>0?N(p.goal)/profit:null;
+return{pr,batch,after,cost,com,ad,lg,acq,st,tax,exp,total,profit,mar:pr?profit/pr:null,roi:cost?profit/cost:null,bp:profit*q,pct:pr?exp/pr:null,units,wc:units==null?null:units*cost}}
+const SG=c=>[['Себестоимость',c.cost,'var(--c1)'],['Комиссия Ozon',c.com,'var(--c2)'],['Реклама',c.ad,'var(--c3)'],['Логистика Ozon',c.lg,'var(--c4)'],['Хранение и эквайринг',c.st+c.acq,'var(--c5)'],['Налог',c.tax,'var(--c6)'],['Прибыль',Math.max(c.profit,0),'var(--c7)']];
+const bar=c=>{const d=Math.max(c.pr,c.total)||1;return'<div class="bar">'+SG(c).map(s=>`<i style="width:${s[1]/d*100}%;background:${s[2]}" title="${s[0]}: ${fm(s[1])} ₽"></i>`).join('')+'</div>'};
+const pst=p=>`object-fit:${p.pf=='contain'?'contain':'cover'};transform:translate(${N(p.px)}%,${N(p.py)}%) scale(${N(p.pz)||1})`;
+const PH=p=>`<div class="phw"><label class="phb">${ph(p)}<input type="file" accept="image/*" id="pf" hidden><u>${p.photo?'Заменить':'Добавить фото'}</u></label>${p.photo?'<button class="lnk" data-pedit>Настроить</button>':''}</div>`;
+const ph=p=>p.photo?`<span class="ph pv"><img src="${p.photo}" style="${pst(p)}" alt=""></span>`:`<span class="ph">${esc((p.name||'?').trim()[0]||'?')}</span>`;
+function defPg(items){return[{id:'p1',name:'Закуп 1',items:items||[]},{id:'p2',name:'Закуп 2',items:[]},{id:'p3',name:'Закуп 3',items:[]}]}
+function normCh(c){if(Array.isArray(c)&&c.length&&c[0]&&c[0].items===undefined)return defPg(c);if(Array.isArray(c)&&c.length&&c[0]&&Array.isArray(c[0].items))return c;return defPg()}
+let S={main:[],china:defPg(),cfg:{rate:13,comm:3},page:'p1'},cur='main',sel=null,qs='',sk='',DB=null,UID=null,chg=new Set,RDY={main:0,china:0},busy=false,saveT,delT,ren=null,PE=null,pdr=null;
+const PG=()=>S.china.find(g=>g.id==S.page)||S.china[0],L=()=>cur=='china'?PG().items:S[cur],setL=a=>{if(cur=='china')PG().items=a;else S[cur]=a},find=id=>L().find(p=>p.id==id);
+function setSt(t,w){const e=$('#st');e.textContent=t;e.className=w?'warn':''}
+function toast(t){const e=$('#tt');e.textContent=t;e.style.display='block';clearTimeout(e._t);e._t=setTimeout(()=>e.style.display='none',2600)}
+function touch(k){chg.add(k);setSt('Сохраняю…');clearTimeout(saveT);saveT=setTimeout(flush,600)}
+async function flush(){if(busy){saveT=setTimeout(flush,300);return}
+ try{localStorage.setItem(LK,JSON.stringify(S))}catch(e){}
+ if(!DB){setSt('Только в этом браузере — сделай экспорт, чтобы не потерять',1);chg.clear();return}
+ busy=true;const ks=[...chg].filter(k=>RDY[k]);chg.clear();if(!ks.length){busy=false;setSt('Данные из облака ещё не загрузились — правки пока не сохраняются в облако',1);return}
+ try{for(const k of ks)await DB.doc(`data/users/${UID}/${k}`).set(k=='china'?{v:2,pages:S.china,rate:S.cfg.rate,comm:S.cfg.comm}:{v:1,items:S[k]});setSt('Сохранено в облаке')}catch(e){ks.forEach(k=>chg.add(k));setSt('Не получилось сохранить в облако — копия есть в этом браузере',1)}
+ busy=false}
+function rows(){let a=L().map(p=>({p,c:calc(p)})).filter(x=>!qs||(x.p.name||'').toLowerCase().includes(qs));
+ if(sk)a.sort((x,y)=>(y.c[sk]??-1e18)-(x.c[sk]??-1e18));return a}
+const rub=x=>x==null||!isFinite(x)?'—':fm(x)+' ₽',cl=(k,c)=>k=='mar'?'hl '+cls(c.mar):k=='roi'?'hl '+(c.roi<0?'bad':'roi'):'n '+cls(c[k]);
+const FC={cost:c=>rub(c.cost),after:c=>rub(c.after),batch:c=>'закуп '+rub(c.batch),profit:c=>rub(c.profit),mar:c=>pc(c.mar),roi:c=>pc(c.roi),bp:c=>rub(c.bp),units:c=>fm(c.units)},CL={profit:1,mar:1,roi:1,bp:1};
+function upd(tr,c){tr.querySelectorAll('[data-c]').forEach(e=>{const k=e.dataset.c;e.textContent=FC[k](c);if(CL[k])e.className=cl(k,c)})}
+function kpis(){if(cur=='china')return kpisC();const v=L().map(p=>({p,c:calc(p)})).filter(x=>x.c.pr>0),sum=f=>v.reduce((s,x)=>s+f(x),0);$('#kp').innerHTML=[['Вложить в партии',fm(sum(x=>x.c.after))+' ₽','позиций: '+v.length],['Прибыль с партий',fm(sum(x=>x.c.bp))+' ₽','по всем партиям'],['Средняя маржа',pc(v.length?sum(x=>x.c.mar)/v.length:null),'среднее по товарам'],['Средняя рентабельность',pc(v.length?sum(x=>x.c.roi||0)/v.length:null),'среднее по товарам']].map(k=>`<div><span>${k[0]}</span><b>${k[1]}</b>${k[2]?`<i>${k[2]}</i>`:''}</div>`).join('')}
+const XI='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>',AR='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',EXT='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>';
+const TI={main:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>',china:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/></svg>'};
+const TR='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 11v6M14 11v6"/></svg>';
+const lk=p=>/^https?:\/\//i.test(p.link||'')?`<a href="${esc(p.link)}" target="_blank" rel="noopener noreferrer" title="Открыть ссылку"><span class="lkt">Открыть</span>${EXT}</a>`:'—';
+const nv=v=>v===''||v==null?'':String(v).replace('.',','),pn=v=>{v=String(v).replace(/\s/g,'').replace(',','.');if(v===''||v==='-'||v==='.')return null;const x=+v;return isNaN(x)?undefined:x};
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,5);
+const blank=o=>({id:uid(),name:'',link:'',photo:'',size:'',buy:'',qty:'',bpct:'',blog:'',ff:'',gift:'',ship:'',price:'',com:'',ad:'',dlv:'',ret:'',buyout:'',stor:'',acq:'',spp:'',taxsys:'',tax:'',goal:'',...o});
+const mkC=o=>({id:uid(),photo:'',link:'',desc:'',color:'',qty:1,yuan:0,wkg:0,perkg:15,cn:0,comment:'',...o});
+const cc=p=>{const q=N(p.qty),y=N(p.yuan),w=N(p.wkg),k=N(p.perkg),r=N(S.cfg.rate),m=N(S.cfg.comm),H=q*y,L=q*w,O=L*k,V=H/100*m+H+O+N(p.cn),T=q?V/q:0;return{r,H,I:y*r,J:H*r,L,N:w*k,O,P:k*r,Q:w*k*r,R:O*r,T,U:T*r,V,W:V*r}};
+const un=(x,u)=>x==null||!isFinite(x)?'—':fm(x,2)+'\u00a0'+u;
+const FCC={I:c=>un(c.I,'₽'),L:c=>un(c.L,'кг'),O:c=>un(c.O,'¥'),R:c=>un(c.R,'₽'),T:c=>un(c.T,'¥'),U:c=>un(c.U,'₽'),V:c=>un(c.V,'¥'),W:c=>un(c.W,'₽')};
+function updC(tr,p){const c=cc(p);tr.querySelectorAll('[data-c]').forEach(e=>e.textContent=FCC[e.dataset.c](c))}
+function kpisC(){const r=N(S.cfg.rate),it=L(),X=it.reduce((s,p)=>s+cc(p).V,0),W=it.reduce((s,p)=>s+cc(p).L,0);$('#kp').innerHTML=[['Общая сумма закупа (Юань)',fm(X,2)+' ¥','позиций: '+it.length],['Общая сумма закупа (Рубль)',fm(X*r,2)+' ₽','курс '+fm(r,2)+' ₽'],['Общий вес',un(W,'кг'),fm(it.reduce((a,p)=>a+N(p.qty),0))+' шт']].map(k=>`<div><span>${k[0]}</span><b>${k[1]}</b>${k[2]?`<i>${k[2]}</i>`:''}</div>`).join('')}
+function rowC(p){const c=cc(p);return`<tr data-id="${p.id}"><td>${ph(p)}</td><td>${lk(p)}</td><td class="sz">${esc((p.desc||'').trim())||'—'}</td>
+<td><input class="cell cc" type="text" inputmode="decimal" data-n data-k="qty" value="${nv(p.qty)}"></td><td><input class="cell cc" type="text" inputmode="decimal" data-n data-k="yuan" value="${nv(p.yuan)}"></td><td data-c="I">${un(c.I,'₽')}</td>
+<td><input class="cell cc" type="text" inputmode="decimal" data-n data-k="wkg" value="${nv(p.wkg)}"></td><td data-c="L">${un(c.L,'кг')}</td><td data-c="O">${un(c.O,'¥')}</td><td data-c="R">${un(c.R,'₽')}</td><td><input class="cell cc" type="text" inputmode="decimal" data-n data-k="cn" value="${nv(p.cn)}"></td>
+<td data-c="T">${un(c.T,'¥')}</td><td data-c="U">${un(c.U,'₽')}</td><td class="n" data-c="V">${un(c.V,'¥')}</td><td class="n" data-c="W">${un(c.W,'₽')}</td>
+<td><input class="cmt cc" data-k="comment" value="${esc(p.comment)}" placeholder="Комментарий"></td><td><div class="act"><button data-mv title="Добавить в «Товары»" aria-label="Добавить в Товары">${AR}</button><button class="del" data-rowdel title="Удалить (нажми дважды)" aria-label="Удалить">${TR}</button></div></td></tr>`}
+function renderC(){const a=L().filter(p=>!qs||[p.desc,p.color,p.link,p.comment].join(' ').toLowerCase().includes(qs));
+ $('#tb2').innerHTML=a.length?a.map(rowC).join(''):`<tr><td colspan="17" class="empty">${L().length?'Ничего не найдено':'Пока пусто. Добавь товар или импортируй данные.'}</td></tr>`;kpisC()}
+const cnt=t=>t=='china'?S.china.reduce((n,g)=>n+g.items.length,0):S[t].length;
+function chrome(){if(!S.china.some(g=>g.id==S.page))S.page=S.china[0].id;document.querySelectorAll('.tabs button').forEach(b=>{b.className=b.dataset.tab==cur?'on':'';b.innerHTML=`${TI[b.dataset.tab]}${TN[b.dataset.tab]}<span class="ct">${cnt(b.dataset.tab)}</span>`});$('#tw1').hidden=cur!='main';$('#tw2').hidden=cur!='china';$('#cfg').hidden=cur!='china';$('#kp').className=cur=='china'?'kc':'';$('#ttl').innerHTML=cur=='china'?`Подбор товара <span>${esc(PG().name)}</span>`:'Товары <span>Ozon</span>';
+ const pgl=$('#pg'),pgx=$('#pgd');pgl.hidden=cur!='china';pgx.hidden=cur!='china';
+ if(cur=='china'){pgl.innerHTML=S.china.map(g=>g.id==ren?`<input id="pgn" maxlength="40" value="${esc(g.name)}" aria-label="Название закупа">`:`<button data-pg="${g.id}" class="${g.id==S.page?'on':''}">${esc(g.name)}</button>`).join('')+'<button data-pgadd title="Добавить закуп" aria-label="Добавить закуп">+</button>';pgx.innerHTML='<button data-pgren>Переименовать</button>'+(S.china.length>1?'<button class="danger" data-pgdel>Удалить страницу закупа</button>':'');if(ren){const e=$('#pgn');if(e){e.focus();e.select()}}}
+ ['rate','comm'].forEach(k=>{const e=$('#'+k);if(document.activeElement!==e)e.value=nv(S.cfg[k])})}
+const pd=d=>{d=d||'';const m=/(?:в мешке\/коробке|в коробке|в мешке)\D{0,3}(\d+)/i.exec(d),b=/габариты\s+(?:коробки|упаковки)\D{0,3}(\d+(?:[.,]\d+)?)\s*[×x*хХ]\s*(\d+(?:[.,]\d+)?)\s*[×x*хХ]\s*(\d+(?:[.,]\d+)?)/i.exec(d),f=x=>+String(x).replace(',','.');return{pcs:m?+m[1]:'',bl:b?f(b[1]):'',bw:b?f(b[2]):'',bh:b?f(b[3]):''}};
+const E=(p,k)=>p[k]!==undefined&&p[k]!==''?p[k]:(pd(p.desc)[k]??'');
+const dens=p=>{const q=N(p.qty),pcs=N(E(p,'pcs')),bv=N(E(p,'bl'))*N(E(p,'bw'))*N(E(p,'bh'))/1e6,bk=N(E(p,'bkg'));if(!(pcs>0&&bv>0&&q>0))return null;const nb=Math.ceil(q/pcs),V=nb*bv,Wt=bk>0?nb*bk:q*N(p.wkg);return{nb,V,Wt,d:Wt/V}};
+function drawerC(p){const I=(k,l,u,st)=>`<label>${l}<span class="ip"><input data-f="${k}" type="text" inputmode="decimal" data-n value="${nv(p[k])}"><em>${u}</em></span></label>`,D=(k,l,u)=>`<label>${l}<span class="ip"><input data-f="${k}" type="text" inputmode="decimal" data-n value="${nv(E(p,k))}"><em>${u}</em></span></label>`;
+$('#dr').className='wide';
+$('#dr').innerHTML=`<div class="dh">${PH(p)}<div class="gr"><input data-f="link" placeholder="Ссылка 1688" value="${esc(p.link)}"><input data-f="color" placeholder="Цвет / характеристика" value="${esc(p.color)}"></div><button class="x" data-close aria-label="Закрыть">${XI}</button></div>
+<div class="dg"><fieldset class="qa"><div class="lt">Данные для расчёта</div><div class="fg">${I('qty','Количество','шт')}${I('yuan','Цена в юанях (за 1 шт)','¥','0.1')}${I('wkg','Вес 1 товара','кг','0.01')}${I('perkg','Доставка за 1 кг','¥')}${I('cn','Доставка по Китаю','¥')}</div></fieldset>
+<div id="res"></div>
+<fieldset><div class="lt">Расчёт плотности</div><div class="fg">${D('pcs','Штук в коробке','шт')}${D('bkg','Вес коробки брутто','кг')}</div><div class="fg g3">${D('bl','Длина коробки','см')}${D('bw','Ширина коробки','см')}${D('bh','Высота коробки','см')}</div><div id="dres"></div></fieldset>
+<fieldset><div class="lt">Размер</div><textarea data-f="desc">${esc(p.desc)}</textarea></fieldset>
+<fieldset class="cm"><div class="lt">Комментарий</div><textarea data-f="comment">${esc(p.comment)}</textarea></fieldset></div>
+<div class="ac"><button class="pri" data-mv>В «Товары» →</button><button data-dup>Дублировать</button><button class="danger" data-del>Удалить</button></div>`;renderRes()}
+function renderResC(p){const c=cc(p),y=N(p.yuan),k=N(p.perkg),R=(l,a,b)=>`<tr><td>${l}</td><td>${a}</td><td>${b}</td></tr>`,d=dens(p);
+$('#res').innerHTML=`<table class="kvt">${R('Цена за 1 шт',un(y,'¥'),un(c.I,'₽'))}${R('Стоимость партии',un(c.H,'¥'),un(c.J,'₽'))}${R('Доставка за 1 кг',un(k,'¥'),un(c.P,'₽'))}${R('Доставка 1 товара',un(c.N,'¥'),un(c.Q,'₽'))}${R('Итоговая стоимость доставки',un(c.O,'¥'),un(c.R,'₽'))}${R('Доставка по Китаю',un(N(p.cn),'¥'),un(N(p.cn)*c.r,'₽'))}${R('Стоимость 1 товара: факт + доставка + комиссия',un(c.T,'¥'),un(c.U,'₽'))}${R('<b>Конечная цена с учётом процента</b>',`<b>${un(c.V,'¥')}</b>`,`<b>${un(c.W,'₽')}</b>`)}</table><p class="sm">Общий вес <b>${fm(c.L,2)} кг</b>. Курс ${fm(c.r,2)} ₽ за юань и комиссия байера ${fm(N(S.cfg.comm),2)}% меняются вверху страницы.</p>`;
+$('#dres').innerHTML=d?`<div class="dn"><b>${fm(d.d,1)}</b><span>кг/м³ — плотность партии</span></div><p class="sm">Коробок <b>${d.nb}</b> · объём <b>${fm(d.V,3)} м³</b> · вес <b>${fm(d.Wt,2)} кг</b>${N(E(p,'bkg'))>0?'':' (без веса упаковки)'}</p>`:'<p class="sm">Укажи штук в коробке и габариты коробки — плотность посчитается по количеству в партии. Данные из «Размера» подставляются сами, если они там есть.</p>'}
+function row({p,c}){const[l1,...r]=(p.name||'').split('\n');
+return`<tr data-id="${p.id}"><td><div class="nm" data-open>${ph(p)}<div><b>${esc(l1||'Без названия')}</b><small>${esc((p.size||r.join(' ')).replace(/\n/g,' · ').trim())}</small></div></div></td>
+<td class="lk">${lk(p)}</td><td><input class="cell" type="text" inputmode="decimal" data-n data-k="buy" value="${nv(p.buy)}"></td>
+<td><input class="cell" type="text" inputmode="decimal" data-n data-k="qty" value="${nv(p.qty)}"></td><td><input class="cell" type="text" inputmode="decimal" data-n data-k="ff" value="${nv(p.ff)}"></td><td class="n" data-c="cost">${rub(c.cost)}</td>
+<td class="n"><span data-c="after">${rub(c.after)}</span><small data-c="batch">закуп ${rub(c.batch)}</small></td><td><input class="cell" type="text" inputmode="decimal" data-n data-k="price" value="${nv(p.price)}"></td><td><input class="cell" type="text" inputmode="decimal" data-n data-k="com" value="${nv(p.com)}"></td>
+<td class="${cl('profit',c)}" data-c="profit">${rub(c.profit)}</td><td class="${cl('mar',c)}" data-c="mar">${pc(c.mar)}</td><td class="${cl('roi',c)}" data-c="roi">${pc(c.roi)}</td>
+<td class="${cl('bp',c)}" data-c="bp">${rub(c.bp)}</td><td data-c="units">${fm(c.units)}</td><td><button class="del" data-rowdel title="Удалить (нажми дважды)" aria-label="Удалить">${TR}</button></td></tr>`}
+function render(){chrome();if(cur=='china')return renderC();const a=rows(),all=L().map(p=>({p,c:calc(p)})),v=all.filter(x=>x.c.pr>0),sum=f=>v.reduce((s,x)=>s+f(x),0);
+ kpis();
+ document.querySelectorAll('th[data-sort]').forEach(t=>t.className=t.dataset.sort==sk?'cur':'');
+ $('#tb').innerHTML=a.length?a.map(row).join(''):`<tr><td colspan="15" class="empty">${L().length?'Ничего не найдено':'Пока пусто. Добавь товар или импортируй данные.'}</td></tr>`}
+function drawer(p){const f=i=>F.filter(x=>x[3]==i).map(x=>`<label>${x[1]}<span class="ip"><input data-f="${x[0]}" ${x[0]=='taxsys'?'':'inputmode="decimal" data-n'} value="${x[0]=='taxsys'?esc(p[x[0]]):nv(p[x[0]])}"><em>${x[2]}</em></span></label>`).join('');
+$('#dr').className='wide m';
+$('#dr').innerHTML=`<div class="dh">${PH(p)}<div class="gr"><textarea data-f="name" rows="2" aria-label="Название" placeholder="Название">${esc(p.name)}</textarea><div class="two"><input data-f="link" placeholder="Ссылка на товар" value="${esc(p.link)}"><input data-f="size" placeholder="Размеры" value="${esc(p.size)}"></div></div><button class="x" data-close aria-label="Закрыть">${XI}</button></div>
+<div class="dg"><fieldset><div class="lt">${G[0]}</div><div class="fg">${f(0)}</div></fieldset><fieldset><div class="lt">${G[1]}</div><div class="fg">${f(1)}</div></fieldset><div id="res"></div>
+<fieldset class="tx"><div class="lt">${G[2]}</div><div class="fg">${f(2)}</div></fieldset><fieldset class="gl"><div class="lt">${G[3]}</div><div class="fg g3">${f(3)}<label>Продавать в месяц<span class="ip ro"><b id="g1"></b></span></label><label>Оборотные средства<span class="ip ro"><b id="g2"></b></span></label></div></fieldset></div>
+<div class="ac"><button data-dup>Дублировать</button><button class="danger" data-del>Удалить</button></div>`;renderRes()}
+function renderRes(){const p=find(sel);if(!p)return;if(cur=='china')return renderResC(p);const c=calc(p);$('#res').innerHTML=`<div class="big"><span class="${cls(c.profit)}">${fm(c.profit)} ₽</span><small>прибыль с единицы</small></div>
+<div class="kv"><div><b class="${cls(c.mar)}">${pc(c.mar)}</b>маржа</div><div><b>${pc(c.roi)}</b>рентабельность</div><div><b>${pc(c.pct)}</b>расходы Ozon от цены</div></div>${bar(c)}
+<ul class="lg">${SG(c).map(s=>`<li><i style="background:${s[2]}"></i>${s[0]}<b>${fm(s[1])}\u00a0₽</b></li>`).join('')}</ul>
+<p class="sm">Партия: закупка <b>${fm(c.batch)} ₽</b>, с упаковкой и отгрузкой <b>${fm(c.after)} ₽</b>, прибыль <b class="${cls(c.bp)}">${fm(c.bp)} ₽</b>.</p>`;$('#g1').textContent=c.units==null?'—':fm(c.units)+'\u00a0шт';$('#g2').textContent=rub(c.wc)}
+function open(id){sel=id;(cur=='china'?drawerC:drawer)(find(id));$('#ov').classList.add('on')}
+function close(){$('#ov').classList.remove('on');sel=null;render()}
+document.addEventListener('input',e=>{const t=e.target,k=t.dataset.f;if(t.id=='rate'||t.id=='comm'){const v=pn(t.value);if(v!==undefined){S.cfg[t.id]=v||0;touch('china');renderC()}return}if(t.classList.contains('cc')){const tr=t.closest('tr'),p=find(tr.dataset.id);if(t.dataset.n!==undefined){const v=pn(t.value);if(v===undefined)return;p[t.dataset.k]=v===null?'':v}else p[t.dataset.k]=t.value;touch('china');updC(tr,p);kpisC();return}if(t.classList.contains('cell')){const tr=t.closest('tr'),p=find(tr.dataset.id);const v=pn(t.value);if(v===undefined)return;p[t.dataset.k]=v||0;touch(cur);upd(tr,calc(p));kpis();return}if(!k||!sel)return;const p=find(sel);if(t.dataset.n!==undefined){const v=pn(t.value);if(v===undefined)return;p[k]=v===null?(k=='spp'?'':0):v}else p[k]=t.value;touch(cur);renderRes();render()});
+document.addEventListener('change',e=>{const t=e.target;
+ if(0){}
+ else if(t.id=='pf'&&t.files[0]){const r=new FileReader;r.onload=()=>{const im=new Image;im.onload=()=>{const c=document.createElement('canvas'),s=Math.min(1,140/Math.max(im.width,im.height));c.width=im.width*s;c.height=im.height*s;c.getContext('2d').drawImage(im,0,0,c.width,c.height);const p=find(sel);p.photo=c.toDataURL('image/jpeg',.62);p.pz=1;p.px=0;p.py=0;p.pf='cover';touch(cur);(cur=='china'?drawerC:drawer)(p);render();peOpen()};im.src=r.result};r.readAsDataURL(t.files[0])}
+ else if(t.id=='imf'&&t.files[0]){const r=new FileReader;r.onload=()=>{try{const o=JSON.parse(r.result),d=o.S||o;let n=0;['main','china'].forEach(k=>{if(Array.isArray(d[k])){S[k]=k=='china'?normCh(d[k]):d[k];touch(k);n++}});if(d.cfg)S.cfg=d.cfg;if(!n)throw 0;render();toast('Данные импортированы')}catch(x){toast('Не удалось прочитать файл')}};r.readAsText(t.files[0]);t.value=''}});
+document.addEventListener('click',async e=>{const t=e.target,g=s=>t.closest(s);
+ if(g('[data-tab]')){cur=g('[data-tab]').dataset.tab;render()}
+ else if(g('[data-open]'))open(g('tr').dataset.id)
+ else if(g('[data-close]')||t.id=='ov')close()
+ else if(g('[data-add]')){const p=cur=='china'?mkC():mk();L().push(p);touch(cur);render();open(p.id)}
+ else if(g('[data-dup]')){const o=find(sel),p={...o,id:uid()};if(cur=='main')p.name=o.name+' (копия)';L().push(p);touch(cur);open(p.id);toast('Копия создана')}
+ else if(g('[data-del]')){const b=g('[data-del]');if(b.dataset.s){setL(L().filter(p=>p.id!=sel));touch(cur);close();toast('Удалено')}else{b.dataset.s=1;b.textContent='Точно удалить?';clearTimeout(delT);delT=setTimeout(()=>{b.dataset.s='';b.textContent='Удалить'},3000)}}
+ else if(g('[data-sort]')){const k=g('[data-sort]').dataset.sort;sk=sk==k?'':k;render()}
+ else if(g('[data-mv]')){const tr=g('tr'),p=L().find(x=>x.id==(tr?tr.dataset.id:sel)),c=cc(p);S.main.push(blank({photo:p.photo,pz:p.pz,px:p.px,py:p.py,pf:p.pf,link:p.link,size:(p.desc||'').trim(),qty:p.qty||'',buy:N(p.qty)?+c.U.toFixed(2):'',taxsys:'УСН доходы',tax:6,ad:10,ret:25,buyout:85,stor:15,acq:1,dlv:105,bpct:0,blog:0}));touch('main');chrome();toast('Добавлено в «Товары»')}
+ else if(g('tbody tr[data-id]')&&!g('input,button,a,textarea'))open(g('tr').dataset.id)
+ else if(g('[data-pgren]')){ren=S.page;render()}
+ else if(g('[data-pg]')){S.page=g('[data-pg]').dataset.pg;try{localStorage.setItem(LK,JSON.stringify(S))}catch(x){}render()}
+ else if(g('[data-pgadd]')){const n=Math.max(0,...S.china.map(x=>+((/Закуп (\d+)/.exec(x.name)||[])[1]||0)))+1,pg={id:uid(),name:'Закуп '+n,items:[]};S.china.push(pg);S.page=pg.id;touch('china');render()}
+ else if(g('[data-pgdel]')){const b=g('[data-pgdel]');if(b.dataset.s){const i=S.china.findIndex(x=>x.id==S.page);S.china.splice(i,1);S.page=S.china[Math.max(0,i-1)].id;touch('china');render();toast('Страница удалена')}else{b.dataset.s=1;b.textContent='Точно удалить страницу и все товары в ней?';clearTimeout(delT);delT=setTimeout(()=>{b.dataset.s='';b.textContent='Удалить страницу закупа'},3500)}}
+ else if(g('[data-pedit]'))peOpen()
+ else if(g('[data-pf]')){PE.f=g('[data-pf]').dataset.pf;peApply()}
+ else if(g('[data-preset]')){PE.z=1;PE.x=0;PE.y=0;PE.f='cover';peApply()}
+ else if(g('[data-pcancel]')||t.id=='pe')peClose()
+ else if(g('[data-pdone]')){const p=find(sel);if(p){p.pz=PE.z;p.px=PE.x;p.py=PE.y;p.pf=PE.f;touch(cur);(cur=='china'?drawerC:drawer)(p);render()}peClose()}
+ else if(g('[data-theme-btn]')){const d=document.documentElement,n=d.dataset.theme=='dark'?'light':'dark';d.dataset.theme=n;try{localStorage.setItem('uo-theme',n)}catch(x){}}
+ else if(g('[data-rowdel]')){const b=g('[data-rowdel]'),id=g('tr').dataset.id;if(b.dataset.s){setL(L().filter(p=>p.id!=id));touch(cur);render();toast('Удалено')}else{b.dataset.s=1;b.classList.add('armed');b.textContent='Точно?';clearTimeout(b._t);b._t=setTimeout(()=>{b.dataset.s='';b.classList.remove('armed');b.innerHTML=TR},3000)}}
+ else if(g('[data-imp]'))$('#imf').click()
+ else if(g('[data-exp]')){const data=JSON.stringify({app:'unit-ozon',v:1,S},null,1),fn='unit-ozon-'+new Date().toISOString().slice(0,10)+'.json';
+  try{const d=window.claude&&await claude.use('downloads');if(d){await d.save({filename:fn,data});return}}catch(x){if(x&&x.code=='declined')return}
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([data],{type:'application/json'}));a.download=fn;a.click()}});
+function peApply(){const im=$('#pim');im.src=PE.src;im.style.cssText=pst({pz:PE.z,px:PE.x,py:PE.y,pf:PE.f});$('#pzr').value=PE.z;document.querySelectorAll('[data-pf]').forEach(b=>b.classList.toggle('on',b.dataset.pf==PE.f))}
+function peOpen(){const p=find(sel);if(!p||!p.photo)return;PE={src:p.photo,z:N(p.pz)||1,x:N(p.px),y:N(p.py),f:p.pf||'cover'};$('#pe').hidden=false;peApply()}
+function peClose(){$('#pe').hidden=true;PE=null}
+const peClamp=()=>{const m=(PE.z-1)*50;PE.x=Math.max(-m,Math.min(m,PE.x));PE.y=Math.max(-m,Math.min(m,PE.y))};
+$('#pfr').addEventListener('pointerdown',e=>{pdr={x:e.clientX,y:e.clientY,px:PE.x,py:PE.y};$('#pfr').setPointerCapture(e.pointerId)});
+$('#pfr').addEventListener('pointermove',e=>{if(!pdr||!PE)return;const r=$('#pfr').getBoundingClientRect();PE.x=pdr.px+(e.clientX-pdr.x)/r.width*100;PE.y=pdr.py+(e.clientY-pdr.y)/r.height*100;peClamp();peApply()});
+['pointerup','pointercancel'].forEach(v=>$('#pfr').addEventListener(v,()=>{pdr=null}));
+$('#pzr').addEventListener('input',e=>{PE.z=+e.target.value;peClamp();peApply()});
+function commitRen(){if(ren==null)return;const g=S.china.find(x=>x.id==ren),e=$('#pgn'),v=e?e.value.trim():'';ren=null;if(g&&v&&v!==g.name){g.name=v.slice(0,40);touch('china')}render()}
+document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.code=='KeyK'){e.preventDefault();const q=$('#q');q.focus();q.select();return}if(e.target.id=='pgn'){if(e.key=='Enter')e.target.blur();else if(e.key=='Escape'){ren=null;render()}return}if(e.key=='Escape'&&PE){peClose();return}if(e.key=='Escape'&&sel)close()});
+document.addEventListener('focusout',e=>{if(e.target.id=='pgn')commitRen()});
+document.addEventListener('dblclick',e=>{const b=e.target.closest('[data-pg]');if(b){S.page=b.dataset.pg;ren=b.dataset.pg;render()}});
+document.addEventListener('mouseup',e=>{const t=e.target;if(t.tagName!='INPUT'||t.type!='text'||t.selectionStart!==t.selectionEnd)return;if(t.scrollWidth>t.clientWidth+1&&e.clientX>t.getBoundingClientRect().left+t.clientWidth*0.6){const n=t.value.length;t.setSelectionRange(n,n)}});
+$('#q').addEventListener('input',e=>{qs=e.target.value.trim().toLowerCase();render()});
+const saveLocal=()=>{try{localStorage.setItem(LK,JSON.stringify(S))}catch(e){}};addEventListener('pagehide',saveLocal);document.addEventListener('visibilitychange',()=>{if(document.hidden)saveLocal()});
+(async function boot(){try{const l=JSON.parse(localStorage.getItem(LK)||'null');if(l)S={main:l.main||[],china:normCh(l.china),cfg:l.cfg||{rate:13,comm:3},page:l.page||'p1'}}catch(e){}
+ render();
+ try{if(window.claude){const u=await claude.use('user'),d=await claude.use('db'),id=u&&await u.id();
+  if(d&&id){DB=d;UID=id;const t=setTimeout(()=>setSt('Облако не отвечает — показаны данные из этого браузера',1),10000);
+   for(const k of['main','china']){for(let i=0;i<3;i++){const s=await DB.doc(`data/users/${id}/${k}`).get();if(s.exists&&(Array.isArray(s.data().items)||Array.isArray(s.data().pages))){const d=JSON.parse(JSON.stringify(s.data()));if(k=='china'){S.china=normCh(d.pages||d.items);S.cfg={rate:d.rate??13,comm:d.comm??3}}else S[k]=d.items;chg.delete(k);RDY[k]=1;break}if(!s.metadata.fromCache){RDY[k]=1;break}await new Promise(r=>setTimeout(r,1200))}}clearTimeout(t)}}}catch(e){}
+ const ok=DB&&RDY.main&&RDY.china;setSt(ok?'Сохранено в облаке':DB?'Не удалось загрузить данные из облака — правки пока не сохраняются в облако':'Только в этом браузере — сделай экспорт, чтобы не потерять',!ok);render()})();
+</script></body></html>
